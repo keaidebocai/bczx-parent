@@ -1,5 +1,6 @@
 package top.woaibocai.bczx.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -30,6 +31,17 @@ public class SysUserServiceImpl implements SysUserService {
     private RedisTemplate<String,String> redisTemplate;
     @Override
     public LoginVo login(LoginDto loginDto) {
+        //先从redis里获取相关kv
+        String redisCaptcha = redisTemplate.opsForValue().get("user:validate" + loginDto.getCodeKey());
+        if (!StrUtil.equalsIgnoreCase(redisCaptcha,loginDto.getCaptcha()) || StrUtil.isEmpty(redisCaptcha)){
+            throw new BoCaiException(ResultCodeEnum.VALIDATECODE_ERROR);
+        }
+        //如果一致，那就删除redis里的验证码
+        Boolean delete = redisTemplate.delete("user:validate" + loginDto.getCodeKey());
+        if (delete){
+            System.out.println("=============================================================");
+        }
+
         //1.获取提交用户名，loginDto获取到
         String dtoUserName = loginDto.getUserName();
         //2.根据用户查询数据表 sys_user表
@@ -56,5 +68,17 @@ public class SysUserServiceImpl implements SysUserService {
         loginVo.setToken(token);
         loginVo.setRefresh_token("");
         return loginVo;
+    }
+
+    @Override
+    public SysUser getUserInfo(String token) {
+        String userJson = redisTemplate.opsForValue().get("user:login" + token);
+        SysUser sysUser = JSON.parseObject(userJson, SysUser.class);
+        return sysUser;
+    }
+
+    @Override
+    public void logout(String token) {
+        redisTemplate.delete("user:login" + token);
     }
 }

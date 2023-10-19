@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @create: 2023-10-19 14:44
  **/
 @SpringBootApplication
+@ComponentScan("top.woaibocai")
 public class ManagerApplication8501 {
     public static void main(String[] args) {
         SpringApplication.run(ManagerApplication8501.class,args);
