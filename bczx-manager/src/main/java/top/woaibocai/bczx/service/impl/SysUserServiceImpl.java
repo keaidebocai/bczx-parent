@@ -5,9 +5,11 @@ import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import top.woaibocai.bczx.common.exception.BoCaiException;
 import top.woaibocai.bczx.manager.SysUserMapper;
 import top.woaibocai.bczx.model.dto.system.LoginDto;
 import top.woaibocai.bczx.model.entity.system.SysUser;
+import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 import top.woaibocai.bczx.model.vo.system.LoginVo;
 import top.woaibocai.bczx.service.SysUserService;
 
@@ -34,7 +36,7 @@ public class SysUserServiceImpl implements SysUserService {
         SysUser sysUser = sysUserMapper.selectUserInfoByUserName(dtoUserName);
         //3.如果根据用户名查不到对应信息，用户不存在，返回错误信息
         if (sysUser == null){
-            throw new RuntimeException("用户名不存在！");
+            throw new BoCaiException(ResultCodeEnum.LOGIN_ERROR);
         }
         //4.如果根据用户名查询到用户信息，用户存在
         //5.获取输入的密码，比较输入的密码和数据库中密码是否一致
@@ -42,7 +44,7 @@ public class SysUserServiceImpl implements SysUserService {
         String md5DigestAsHex = DigestUtils.md5DigestAsHex(loginDtoPassword.getBytes());
         //6.如果密码一直，登录成功，如果密码不一致登陆失败
        if (!md5DigestAsHex.equals(sysUser.getPassword())){
-           throw new RuntimeException("用户名不存在！");
+           throw new BoCaiException(ResultCodeEnum.LOGIN_ERROR);
        }
         //7.登陆成功，生成用户唯一表示token
         String token = UUID.randomUUID().toString().replace("-", "");
