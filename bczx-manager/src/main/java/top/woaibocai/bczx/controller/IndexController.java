@@ -12,6 +12,7 @@ import top.woaibocai.bczx.model.vo.system.LoginVo;
 import top.woaibocai.bczx.model.vo.system.ValidateCodeVo;
 import top.woaibocai.bczx.service.SysUserService;
 import top.woaibocai.bczx.service.ValidateCodeService;
+import top.woaibocai.bczx.utils.AuthContextUtil;
 
 /**
  * @program: bczx-parent
@@ -37,20 +38,26 @@ public class IndexController {
     }
     @Operation(summary = "图形验证码")
     @GetMapping(value = "/generateValidateCode")
-    public Result<ValidateCodeVo> generateValidateCode(){
+    public Result generateValidateCode(){
         ValidateCodeVo validateCodeVo = validateCodeService.generateValidateCode();
         return Result.build(validateCodeVo,ResultCodeEnum.SUCCESS);
     }
 
+//    @Operation(summary = "获取当前用户信息")
+//    @GetMapping(value = "/getUserInfo")
+//    public Result getUserInfo(@RequestHeader(name = "token") String token){
+//        //1.从请求头里获取token
+//        //2.根据token，查询redis获取的用户信息
+//        SysUser sysUser = sysUserService.getUserInfo(token);
+//        //3。用户返回
+//        return Result.build(sysUser,ResultCodeEnum.SUCCESS);
+//    }
     @Operation(summary = "获取当前用户信息")
     @GetMapping(value = "/getUserInfo")
-    public Result getUserInfo(@RequestHeader(name = "token") String token){
-        //1.从请求头里获取token
-        //2.根据token，查询redis获取的用户信息
-        SysUser sysUser = sysUserService.getUserInfo(token);
-        //3。用户返回
-        return Result.build(sysUser,ResultCodeEnum.SUCCESS);
+    public Result getUserInfo(){
+        return Result.build(AuthContextUtil.get(),ResultCodeEnum.SUCCESS);
     }
+
     @Operation(summary = "退出登录")
     @GetMapping("logout")
     public Result logout(@RequestHeader(name ="token") String token){
