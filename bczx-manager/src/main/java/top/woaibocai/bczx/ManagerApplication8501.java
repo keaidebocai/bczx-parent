@@ -2,7 +2,9 @@ package top.woaibocai.bczx;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
+import top.woaibocai.bczx.properties.UserProperties;
 
 /**
  * @program: bczx-parent
@@ -12,6 +14,8 @@ import org.springframework.context.annotation.ComponentScan;
  **/
 @SpringBootApplication
 @ComponentScan("top.woaibocai")
+//使UserProperties的@ConfigurationProperties注解生效
+@EnableConfigurationProperties(value = {UserProperties.class})
 public class ManagerApplication8501 {
     public static void main(String[] args) {
         SpringApplication.run(ManagerApplication8501.class,args);
