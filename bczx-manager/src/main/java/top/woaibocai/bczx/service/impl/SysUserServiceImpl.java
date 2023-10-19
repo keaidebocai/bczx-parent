@@ -37,11 +37,7 @@ public class SysUserServiceImpl implements SysUserService {
             throw new BoCaiException(ResultCodeEnum.VALIDATECODE_ERROR);
         }
         //如果一致，那就删除redis里的验证码
-        Boolean delete = redisTemplate.delete("user:validate" + loginDto.getCodeKey());
-        if (delete){
-            System.out.println("=============================================================");
-        }
-
+        redisTemplate.delete("user:validate" + loginDto.getCodeKey());
         //1.获取提交用户名，loginDto获取到
         String dtoUserName = loginDto.getUserName();
         //2.根据用户查询数据表 sys_user表
