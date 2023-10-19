@@ -28,17 +28,18 @@
         <mysql.verison>8.0.33</mysql.verison>
         <fastjson.version>2.0.21</fastjson.version>
         <lombok.version>1.18.20</lombok.version>
-        <mybatis.version>3.0.1</mybatis.version>
+        <mybatisplus.version>3.5.3.1</mybatisplus.version>
+        <druid.version>1.2.18</druid.version>
     </properties>
 
     <!-- 管理依赖，版本锁定 -->
     <dependencyManagement>
         <dependencies>
-            <!-- mybatis和spring boot整合的起步依赖 -->
+            <!-- mybatis-plus  -->
             <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis.version}</version>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatisplus.version}</version>
             </dependency>
 
             <!-- mysql驱动 -->
@@ -60,6 +61,13 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+
+            <!-- druid启动器的依赖  -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-3-starter</artifactId>
+                <version>${druid.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
