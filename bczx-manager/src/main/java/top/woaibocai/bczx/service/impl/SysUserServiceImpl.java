@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import top.woaibocai.bczx.common.exception.BoCaiException;
-import top.woaibocai.bczx.manager.SysUserMapper;
+import top.woaibocai.bczx.mapper.SysUserMapper;
 import top.woaibocai.bczx.model.dto.system.LoginDto;
 import top.woaibocai.bczx.model.entity.system.SysUser;
 import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
