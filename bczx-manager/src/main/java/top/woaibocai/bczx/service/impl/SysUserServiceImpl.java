@@ -2,6 +2,9 @@ package top.woaibocai.bczx.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import org.springframework.util.DigestUtils;
 import top.woaibocai.bczx.common.exception.BoCaiException;
 import top.woaibocai.bczx.mapper.SysUserMapper;
 import top.woaibocai.bczx.model.dto.system.LoginDto;
+import top.woaibocai.bczx.model.dto.system.SysUserDto;
 import top.woaibocai.bczx.model.entity.system.SysUser;
 import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 import top.woaibocai.bczx.model.vo.system.LoginVo;
@@ -76,5 +80,48 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public void logout(String token) {
         redisTemplate.delete("user:login" + token);
+    }
+
+    @Override
+    public IPage<SysUser> findByPage(Long pageNum, Long pageSize, SysUserDto sysUserDto) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper
+                .orderByDesc(SysUser::getCreateTime)
+                .like(sysUserDto.getKeyword() != null,SysUser::getUsername,sysUserDto.getKeyword());
+        //分页
+        IPage<SysUser> page= new Page<>();
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        IPage<SysUser> iPage = sysUserMapper.selectPage(page, queryWrapper);
+        return iPage;
+    }
+
+    @Override
+    public void saveSysUser(SysUser sysUser) {
+        //username不可重复
+        SysUser sysUser1 = sysUserMapper.selectById(sysUser.getUsername());
+        if (sysUser1!=null){
+            throw new BoCaiException(ResultCodeEnum.USER_NAME_IS_EXISTS);
+        }
+        //给密码加密
+        sysUser.setPassword(DigestUtils.md5DigestAsHex(sysUser.getPassword().getBytes()));
+        sysUserMapper.insert(sysUser);
+    }
+
+    @Override
+    public void updateSysUser(SysUser sysUser) {
+        //username不可重复
+        SysUser sysUser1 = sysUserMapper.selectById(sysUser.getUsername());
+        if (sysUser1!=null){
+            throw new BoCaiException(ResultCodeEnum.USER_NAME_IS_EXISTS);
+        }
+        //给密码加密
+        sysUser.setPassword(DigestUtils.md5DigestAsHex(sysUser.getPassword().getBytes()));
+        sysUserMapper.updateById(sysUser);
+    }
+
+    @Override
+    public void deleteById(Long userId) {
+        sysUserMapper.deleteById(userId);
     }
 }
