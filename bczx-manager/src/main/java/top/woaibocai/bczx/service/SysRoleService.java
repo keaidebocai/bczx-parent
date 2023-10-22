@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import top.woaibocai.bczx.model.dto.system.SysRoleDto;
 import top.woaibocai.bczx.model.entity.system.SysRole;
 
+import java.util.Map;
+
 public interface SysRoleService {
     IPage<SysRole> findByPage(SysRoleDto sysRoleDto, Integer current, Integer limit);
 
@@ -12,4 +14,6 @@ public interface SysRoleService {
     void updateSysRole(SysRole sysRole);
 
     void deleteById(Long roleId);
+
+    Map<String, Object> findAll(Long userId);
 }

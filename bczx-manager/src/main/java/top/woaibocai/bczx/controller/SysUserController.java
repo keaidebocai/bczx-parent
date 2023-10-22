@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+import top.woaibocai.bczx.model.dto.system.AssginRoleDto;
 import top.woaibocai.bczx.model.dto.system.SysUserDto;
 import top.woaibocai.bczx.model.entity.system.SysUser;
 import top.woaibocai.bczx.model.vo.common.Result;
@@ -51,6 +52,13 @@ public class SysUserController {
     @DeleteMapping("deleteById/{userId}")
     public Result deleteById(@PathVariable("userId") Long userId){
         sysUserService.deleteById(userId);
+        return Result.build(null,ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "用户角色分配，保存分配数据")
+    @PostMapping("doAssign")
+    public Result doAssign(@RequestBody AssginRoleDto assginRoleDto){
+        sysUserService.doAssign(assginRoleDto);
         return Result.build(null,ResultCodeEnum.SUCCESS);
     }
 

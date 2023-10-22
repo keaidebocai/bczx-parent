@@ -11,6 +11,8 @@ import top.woaibocai.bczx.model.vo.common.Result;
 import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 import top.woaibocai.bczx.service.SysRoleService;
 
+import java.util.Map;
+
 /**
  * @program: bczx-parent
  * @description:
@@ -52,6 +54,12 @@ public class SysRoleController {
     public Result deleteById(@PathVariable("roleId") Long roleId ){
         sysRoleService.deleteById(roleId);
         return Result.build(null,ResultCodeEnum.SUCCESS);
+    }
+    @Operation(summary = "查询所有角色")
+    @GetMapping("findAllRoles/{userId}")
+    public Result findAllRoles(@PathVariable("userId") Long userId){
+        Map<String,Object> map = sysRoleService.findAll(userId);
+        return Result.build(map,ResultCodeEnum.SUCCESS);
     }
 
 }

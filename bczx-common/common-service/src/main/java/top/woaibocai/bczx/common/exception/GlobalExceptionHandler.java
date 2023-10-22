@@ -13,10 +13,10 @@ import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public Result error(){
-        return Result.build(null, ResultCodeEnum.SYSTEM_ERROR);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public Result error(){
+//        return Result.build(null, ResultCodeEnum.SYSTEM_ERROR);
+//    }
 
     //自定义异常处理
     @ExceptionHandler(BoCaiException.class)

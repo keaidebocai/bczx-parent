@@ -1,6 +1,7 @@
 package top.woaibocai.bczx.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import top.woaibocai.bczx.model.dto.system.AssginRoleDto;
 import top.woaibocai.bczx.model.dto.system.LoginDto;
 import top.woaibocai.bczx.model.dto.system.SysUserDto;
 import top.woaibocai.bczx.model.entity.system.SysUser;
@@ -20,4 +21,6 @@ public interface SysUserService {
     void updateSysUser(SysUser sysUser);
 
     void deleteById(Long userId);
+
+    void doAssign(AssginRoleDto assginRoleDto);
 }

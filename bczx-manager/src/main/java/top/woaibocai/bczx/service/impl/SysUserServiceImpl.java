@@ -10,14 +10,18 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import top.woaibocai.bczx.common.exception.BoCaiException;
+import top.woaibocai.bczx.mapper.SysUserRoleMapper;
 import top.woaibocai.bczx.mapper.SysUserMapper;
+import top.woaibocai.bczx.model.dto.system.AssginRoleDto;
 import top.woaibocai.bczx.model.dto.system.LoginDto;
 import top.woaibocai.bczx.model.dto.system.SysUserDto;
+import top.woaibocai.bczx.model.entity.system.SysUserRole;
 import top.woaibocai.bczx.model.entity.system.SysUser;
 import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 import top.woaibocai.bczx.model.vo.system.LoginVo;
 import top.woaibocai.bczx.service.SysUserService;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -33,6 +37,8 @@ public class SysUserServiceImpl implements SysUserService {
     private SysUserMapper sysUserMapper;
     @Resource
     private RedisTemplate<String,String> redisTemplate;
+    @Resource
+    private SysUserRoleMapper sysUserRoleMapper;
     @Override
     public LoginVo login(LoginDto loginDto) {
         //先从redis里获取相关kv
@@ -123,5 +129,17 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public void deleteById(Long userId) {
         sysUserMapper.deleteById(userId);
+    }
+
+    @Override
+    public void doAssign(AssginRoleDto assginRoleDto) {
+        //根据用户id，删除id之前分配角色数据
+        sysUserRoleMapper.deleteByUserId(assginRoleDto.getUserId());
+        //2.重新分配新数据
+        List<Long> roleIdList = assginRoleDto.getRoleIdList();
+        SysUserRole sysUserRole = new SysUserRole();
+        sysUserRole.setUserId(assginRoleDto.getUserId());
+        //遍历的到每个角色的id
+        sysUserRoleMapper.bathInsetRole(assginRoleDto.getUserId(),roleIdList);
     }
 }

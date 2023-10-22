@@ -40,6 +40,7 @@ public class IndexController {
     @GetMapping(value = "/generateValidateCode")
     public Result generateValidateCode(){
         ValidateCodeVo validateCodeVo = validateCodeService.generateValidateCode();
+        System.out.println(validateCodeVo);
         return Result.build(validateCodeVo,ResultCodeEnum.SUCCESS);
     }
 
