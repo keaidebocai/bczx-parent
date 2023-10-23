@@ -9,10 +9,14 @@ import top.woaibocai.bczx.model.entity.system.SysUser;
 import top.woaibocai.bczx.model.vo.common.Result;
 import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 import top.woaibocai.bczx.model.vo.system.LoginVo;
+import top.woaibocai.bczx.model.vo.system.SysMenuVo;
 import top.woaibocai.bczx.model.vo.system.ValidateCodeVo;
+import top.woaibocai.bczx.service.SysMenuService;
 import top.woaibocai.bczx.service.SysUserService;
 import top.woaibocai.bczx.service.ValidateCodeService;
 import top.woaibocai.bczx.utils.AuthContextUtil;
+
+import java.util.List;
 
 /**
  * @program: bczx-parent
@@ -29,6 +33,8 @@ public class IndexController {
     private SysUserService sysUserService ;
     @Resource
     private ValidateCodeService validateCodeService;
+    @Resource
+    private SysMenuService sysMenuService;
 
     @Operation(summary = "登录接口")
     @PostMapping(value = "/login")
@@ -43,16 +49,6 @@ public class IndexController {
         System.out.println(validateCodeVo);
         return Result.build(validateCodeVo,ResultCodeEnum.SUCCESS);
     }
-
-//    @Operation(summary = "获取当前用户信息")
-//    @GetMapping(value = "/getUserInfo")
-//    public Result getUserInfo(@RequestHeader(name = "token") String token){
-//        //1.从请求头里获取token
-//        //2.根据token，查询redis获取的用户信息
-//        SysUser sysUser = sysUserService.getUserInfo(token);
-//        //3。用户返回
-//        return Result.build(sysUser,ResultCodeEnum.SUCCESS);
-//    }
     @Operation(summary = "获取当前用户信息")
     @GetMapping(value = "/getUserInfo")
     public Result getUserInfo(){
@@ -64,6 +60,12 @@ public class IndexController {
     public Result logout(@RequestHeader(name ="token") String token){
         sysUserService.logout(token);
         return Result.build(null,ResultCodeEnum.SUCCESS);
+    }
+    @Operation(summary = "查询用户可以操作的菜单")
+    @GetMapping("/menus")
+    public Result menus(){
+        List<SysMenuVo> list = sysMenuService.findMenusByUserId();
+        return Result.build(list,ResultCodeEnum.SUCCESS);
     }
 
 }

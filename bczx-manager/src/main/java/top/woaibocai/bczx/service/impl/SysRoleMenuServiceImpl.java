@@ -44,7 +44,7 @@ public class SysRoleMenuServiceImpl implements SysRoleMenuService {
         sysRoleMenuMapper.deleteByRoleId(assginMenuDto.getRoleId());
         //保存分配数据
         List<Map<String, Number>> menuInfo = assginMenuDto.getMenuIdList();
-        if (menuInfo!= null){
+        if (menuInfo!= null && menuInfo.size()>0){
             sysRoleMenuMapper.doAssign(assginMenuDto);
         }
     }
