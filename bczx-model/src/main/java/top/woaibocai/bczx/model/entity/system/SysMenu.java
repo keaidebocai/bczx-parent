@@ -9,7 +9,8 @@ import java.util.List;
 @Schema(description = "系统菜单实体类")
 @Data
 public class SysMenu extends BaseEntity {
-
+	@Schema(description = "id")
+	private Long id;
 	@Schema(description = "父节点id")
 	private Long parentId;
 
@@ -25,8 +26,5 @@ public class SysMenu extends BaseEntity {
 	@Schema(description = "状态(0:禁止,1:正常)")
 	private Integer status;
 
-	// 下级列表
-	@Schema(description = "子节点")
-	private List<SysMenu> children;
 
 }
