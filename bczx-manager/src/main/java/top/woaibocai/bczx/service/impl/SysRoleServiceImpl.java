@@ -64,12 +64,7 @@ public class SysRoleServiceImpl implements SysRoleService {
         List<SysRole> roleList = sysRoleMapper.selectList(null);
         //2.分配过的角色列表
         //根据userId查询分配过的角色信息
-        LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<>();
-        wrapper
-                .select(SysUserRole::getRoleId)
-                .eq(SysUserRole::getUserId,userId);
-        List<SysUserRole> userRoles = sysUserRoleMapper.selectList(wrapper);
-
+        List<Long> userRoles = sysUserRoleMapper.selectRoleIdsByUserId(userId);
         Map<String,Object> map = new HashMap<>();
         map.put("allRolesList",roleList);
         map.put("sysUserRoles",userRoles);

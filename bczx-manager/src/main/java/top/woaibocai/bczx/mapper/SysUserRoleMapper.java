@@ -20,4 +20,6 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
     * @Date: 2023/10/22
     */
     void bathInsetRole(@Param("userId") Long userId, @Param("roleIdList") List<Long> roleIdList);
+
+    List<Long> selectRoleIdsByUserId(Long userId);
 }
