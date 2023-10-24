@@ -10,6 +10,8 @@ import top.woaibocai.bczx.model.vo.common.Result;
 import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 import top.woaibocai.bczx.service.BrandService;
 
+import java.util.List;
+
 /**
  * @program: bczx-parent
  * @description:
@@ -22,6 +24,12 @@ import top.woaibocai.bczx.service.BrandService;
 public class BrandController {
     @Resource
     private BrandService brandService;
+    @Operation(summary = "查询所有")
+    @GetMapping("findAll")
+    public Result findAll(){
+        List<Brand> list = brandService.findAll();
+        return Result.build(list,ResultCodeEnum.SUCCESS);
+    }
 
     @Operation(summary = "列表分页")
     @GetMapping("/{page}/{limit}")

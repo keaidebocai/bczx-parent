@@ -9,6 +9,8 @@ import top.woaibocai.bczx.mapper.BrandMapper;
 import top.woaibocai.bczx.model.entity.product.Brand;
 import top.woaibocai.bczx.service.BrandService;
 
+import java.util.List;
+
 /**
  * @program: bczx-parent
  * @description:
@@ -22,7 +24,7 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public IPage<Brand> findByPage(Integer page, Integer limit) {
         IPage<Brand> iPage = new Page<>();
-        iPage.setPages(page);
+        iPage.setCurrent(page);
         iPage.setSize(limit);
         LambdaQueryWrapper<Brand> wrapper = new LambdaQueryWrapper<>();
         wrapper.orderByAsc(Brand::getId);
@@ -33,5 +35,10 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public void save(Brand brand) {
         brandMapper.insert(brand);
+    }
+
+    @Override
+    public List<Brand> findAll() {
+        return brandMapper.selectList(null);
     }
 }
