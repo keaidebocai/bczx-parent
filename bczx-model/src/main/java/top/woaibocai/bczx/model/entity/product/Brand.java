@@ -8,7 +8,8 @@ import top.woaibocai.bczx.model.entity.base.BaseEntity;
 @Data
 @Schema(description = "品牌实体类")
 public class Brand extends BaseEntity {
-
+	@Schema(description = "品牌id")
+	private Long id;
 	@Schema(description = "品牌名称")
 	private String name;
 
