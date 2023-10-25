@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.woaibocai.bczx.model.dto.product.CategoryBrandDto;
 import top.woaibocai.bczx.model.entity.product.CategoryBrand;
 import top.woaibocai.bczx.model.vo.common.Result;
@@ -25,6 +22,13 @@ import top.woaibocai.bczx.service.CategoryBrandService;
 public class CategoryBrandController {
     @Resource
     private CategoryBrandService categoryBrandService;
+
+    @Operation(summary = "添加")
+    @PostMapping("save")
+    public Result save(@RequestBody CategoryBrand categoryBrand){
+        categoryBrandService.save(categoryBrand);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
 
     @Operation(summary = "分类品牌分页查询")
     @GetMapping("/{page}/{limit}")
