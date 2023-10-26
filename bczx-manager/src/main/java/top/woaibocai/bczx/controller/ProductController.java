@@ -1,19 +1,19 @@
 package top.woaibocai.bczx.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.woaibocai.bczx.model.dto.product.ProductDto;
 import top.woaibocai.bczx.model.entity.product.Product;
 import top.woaibocai.bczx.model.vo.common.Result;
 import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 import top.woaibocai.bczx.service.ProductService;
+
+import java.util.List;
 
 /**
  * @program: bczx-parent
@@ -27,6 +27,44 @@ import top.woaibocai.bczx.service.ProductService;
 public class ProductController {
     @Resource
     private ProductService productService;
+    @Operation(summary = "上下架")
+    @GetMapping("/updateStatus/{id}/{status}")
+    public Result updateStatus(@PathVariable Long id,
+                               @PathVariable Integer status) {
+        productService.updateStatus(id, status);
+        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+    }
+    @Operation(summary = "审核商品")
+    @GetMapping("/updateAuditStatus/{id}/{auditStatus}")
+    public Result updateAuditStatus(@PathVariable Long id,
+                                    @PathVariable Integer auditStatus) {
+        productService.updateAuditStatus(id, auditStatus);
+        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+    }
+    @Operation(summary = "删除商品")
+    @DeleteMapping("deleteById/{id}")
+    public Result deleteById(@PathVariable Long id){
+        productService.deleteById(id);
+        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+    }
+//    @Operation(summary = "保存或修改")
+//    @PutMapping("/updateById")
+//    public Result updateById(@Parameter(name = "product", description = "请求参数实体类", required = true) @RequestBody Product product) {
+//        productService.updateById(product);
+//        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+//    }
+    @Operation(summary = "根据id查询商品信息")
+    @GetMapping("getById/{id}")
+    public Result getById(@PathVariable Long id){
+        Product product = productService.getById(id);
+        return Result.build(product, ResultCodeEnum.SUCCESS);
+    }
+    @Operation(summary = "添加")
+    @PostMapping("save")
+    public Result save(@RequestBody Product product){
+        productService.save(product);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
     @Operation(summary = "条件分页查询")
     @GetMapping("/{page}/{limit}")
     public Result list(@PathVariable Integer page,

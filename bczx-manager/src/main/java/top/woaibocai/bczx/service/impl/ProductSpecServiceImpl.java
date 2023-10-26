@@ -9,6 +9,8 @@ import top.woaibocai.bczx.mapper.ProductSpecMapper;
 import top.woaibocai.bczx.model.entity.product.ProductSpec;
 import top.woaibocai.bczx.service.ProductSpecService;
 
+import java.util.List;
+
 /**
  * @program: bczx-parent
  * @description:
@@ -41,5 +43,10 @@ public class ProductSpecServiceImpl implements ProductSpecService {
     @Override
     public void deleteById(Long id) {
         productSpecMapper.deleteById(id);
+    }
+
+    @Override
+    public List<ProductSpec> findAll() {
+        return productSpecMapper.selectList(null);
     }
 }

@@ -10,6 +10,8 @@ import top.woaibocai.bczx.model.vo.common.Result;
 import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 import top.woaibocai.bczx.service.ProductSpecService;
 
+import java.util.List;
+
 /**
  * @program: bczx-parent
  * @description:
@@ -22,6 +24,12 @@ import top.woaibocai.bczx.service.ProductSpecService;
 public class ProductSpecController {
     @Resource
     private ProductSpecService productSpecService;
+    @Operation(summary = "查询所有")
+    @GetMapping("findAll")
+    public Result findAll(){
+        List<ProductSpec> list = productSpecService.findAll();
+        return Result.build(list, ResultCodeEnum.SUCCESS);
+    }
     @Operation(summary = "列表")
     @GetMapping("/{page}/{limit}")
     public Result list(@PathVariable Integer page,
