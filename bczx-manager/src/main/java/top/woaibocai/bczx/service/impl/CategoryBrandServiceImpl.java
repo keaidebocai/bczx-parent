@@ -9,6 +9,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import top.woaibocai.bczx.mapper.CategoryBrandMapper;
 import top.woaibocai.bczx.model.dto.product.CategoryBrandDto;
+import top.woaibocai.bczx.model.entity.product.Brand;
 import top.woaibocai.bczx.model.entity.product.CategoryBrand;
 import top.woaibocai.bczx.service.CategoryBrandService;
 
@@ -34,5 +35,11 @@ public class CategoryBrandServiceImpl implements CategoryBrandService {
     @Override
     public void save(CategoryBrand categoryBrand) {
         categoryBrandMapper.insert(categoryBrand);
+    }
+
+    @Override
+    public List<Brand> findBrandByCategoryId(Long categoryId) {
+        List<Brand> list = categoryBrandMapper.findBrandByCategoryId(categoryId);
+         return list;
     }
 }

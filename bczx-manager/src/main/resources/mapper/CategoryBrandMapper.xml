@@ -20,4 +20,16 @@
         </where>
         order by cb.id desc
     </select>
+    <select id="findBrandByCategoryId" resultType="top.woaibocai.bczx.model.entity.product.Brand">
+        select
+            b.id,
+            b.name,
+            b.logo
+        from
+            brand b
+            inner join category_brand cb on cb.brand_id=b.id
+            inner join category c on cb.category_id = c.id
+        where
+            c.id=#{categoryId}
+    </select>
 </mapper>

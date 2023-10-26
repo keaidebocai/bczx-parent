@@ -6,10 +6,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 import top.woaibocai.bczx.model.dto.product.CategoryBrandDto;
+import top.woaibocai.bczx.model.entity.product.Brand;
 import top.woaibocai.bczx.model.entity.product.CategoryBrand;
 import top.woaibocai.bczx.model.vo.common.Result;
 import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 import top.woaibocai.bczx.service.CategoryBrandService;
+
+import java.util.List;
 
 /**
  * @program: bczx-parent
@@ -22,6 +25,13 @@ import top.woaibocai.bczx.service.CategoryBrandService;
 public class CategoryBrandController {
     @Resource
     private CategoryBrandService categoryBrandService;
+
+    @Operation(summary = "分类id查询对应的品牌数据")
+    @GetMapping("findBrandByCategoryId/{categoryId}")
+    public Result findBrandByCategoryId(@PathVariable Long categoryId){
+        List<Brand> list = categoryBrandService.findBrandByCategoryId(categoryId);
+        return Result.build(list,ResultCodeEnum.SUCCESS);
+    }
 
     @Operation(summary = "添加")
     @PostMapping("save")
