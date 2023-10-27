@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+import top.woaibocai.bczx.common.log.annotation.Log;
+import top.woaibocai.bczx.common.log.enums.OperatorType;
 import top.woaibocai.bczx.model.entity.product.Brand;
 import top.woaibocai.bczx.model.vo.common.Result;
 import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
@@ -30,7 +32,7 @@ public class BrandController {
         List<Brand> list = brandService.findAll();
         return Result.build(list,ResultCodeEnum.SUCCESS);
     }
-
+    @Log(title = "品牌管理：列表",businessType = 0,operatorType = OperatorType.OTHER)
     @Operation(summary = "列表分页")
     @GetMapping("/{page}/{limit}")
     public Result list(@PathVariable Integer page,

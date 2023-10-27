@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+import top.woaibocai.bczx.common.log.annotation.Log;
 import top.woaibocai.bczx.model.dto.system.SysRoleDto;
 import top.woaibocai.bczx.model.entity.system.SysRole;
 import top.woaibocai.bczx.model.vo.common.Result;
@@ -35,6 +36,7 @@ public class SysRoleController {
         IPage<SysRole> iPage = sysRoleService.findByPage(sysRoleDto,current,limit);
         return Result.build(iPage, ResultCodeEnum.SUCCESS);
     }
+    @Log(title = "角色管理：添加 ",businessType = 1)
     @Operation(summary = "角色添加")
     @PostMapping("saveSysRole")
     public Result saveSysRole(@RequestBody SysRole sysRole){

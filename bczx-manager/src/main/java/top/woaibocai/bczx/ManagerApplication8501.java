@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import top.woaibocai.bczx.common.log.annotation.EnableLogAspect;
 import top.woaibocai.bczx.properties.MinioProperties;
 import top.woaibocai.bczx.properties.UserProperties;
 
@@ -19,6 +20,7 @@ import top.woaibocai.bczx.properties.UserProperties;
 //使UserProperties的@ConfigurationProperties注解生效
 @EnableConfigurationProperties(value = {UserProperties.class, MinioProperties.class})
 @EnableScheduling
+@EnableLogAspect
 public class ManagerApplication8501 {
     public static void main(String[] args) {
         SpringApplication.run(ManagerApplication8501.class,args);
