@@ -12,6 +12,9 @@
         <module>bczx-common</module>
         <module>bczx-model</module>
         <module>bczx-manager</module>
+        <module>bczx-server-gateway</module>
+        <module>bczx-service</module>
+        <module>bczx-service-client</module>
     </modules>
 
     <!-- 指定父工程 -->
@@ -30,11 +33,35 @@
         <lombok.version>1.18.20</lombok.version>
         <mybatisplus.version>3.5.3.1</mybatisplus.version>
         <druid.version>1.2.18</druid.version>
+        <cloud.version>2022.0.2</cloud.version>
+        <alibaba.version>2022.0.0.0-RC2</alibaba.version>
+        <alipay.version>4.8.73.ALL</alipay.version>
     </properties>
 
     <!-- 管理依赖，版本锁定 -->
     <dependencyManagement>
+
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--导入支付宝支付sdk-->
+            <dependency>
+                <groupId>com.alipay.sdk</groupId>
+                <artifactId>alipay-sdk-java</artifactId>
+                <version>${alipay.version}</version>
+            </dependency>
             <!-- mybatis-plus  -->
             <dependency>
                 <groupId>com.baomidou</groupId>
