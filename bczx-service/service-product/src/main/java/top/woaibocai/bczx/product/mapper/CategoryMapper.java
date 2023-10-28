@@ -9,4 +9,5 @@ import java.util.List;
 public interface CategoryMapper {
     List<Category> selectOneCategory();
 
+    List<Category> selectList();
 }

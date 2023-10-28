@@ -26,7 +26,6 @@ import java.util.List;
 @Tag(name = "首页管理接口")
 @RestController
 @RequestMapping("/api/product/index")
-@CrossOrigin
 public class IndexController {
     @Resource
     private CategoryService categoryService;
