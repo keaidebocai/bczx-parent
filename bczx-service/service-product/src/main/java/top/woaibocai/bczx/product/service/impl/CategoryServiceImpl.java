@@ -1,6 +1,10 @@
 package top.woaibocai.bczx.product.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSON;
 import jakarta.annotation.Resource;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import top.woaibocai.bczx.model.entity.product.Category;
 import top.woaibocai.bczx.product.mapper.CategoryMapper;
@@ -9,6 +13,7 @@ import top.woaibocai.bczx.product.service.CategoryService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -22,11 +27,24 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
     @Resource
     private CategoryMapper categoryMapper;
+    @Resource
+    private RedisTemplate<String,String> redisTemplate;
     @Override
     public List<Category> selectOneCategory() {
+        //查询redis里是否有所有的一级分类
+        String categoryOneJson = redisTemplate.opsForValue().get("category:one");
+        //如果包含了所有一级分类，直接返回
+        if (!StrUtil.isEmpty(categoryOneJson)){
+            List<Category> categoryList = JSON.parseArray(categoryOneJson, Category.class);
+            return categoryList;
+        }
+        //如果没有就查数据库，把数据库的内容返回
         List<Category> categoryList = categoryMapper.selectOneCategory();
+        String toJSONString = JSON.toJSONString(categoryList);
+        redisTemplate.opsForValue().set("category:one",toJSONString,7, TimeUnit.DAYS);
         return categoryList;
     }
+    @Cacheable(value = "category",key = "'all'")
     @Override
     public List<Category> findCategoryTree() {
         //先查询所有的数据
