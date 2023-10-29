@@ -1,0 +1,22 @@
+# 自定义配置
+bczx:
+  auth:
+    noAuthUrls:
+      - /admin/system/index/login
+      - /admin/system/index/generateValidateCode
+      - /swagger-resources/**
+      - /swagger-ui/**
+      - /swagger-ui.html
+      - /v2/api-docs/**
+      - /webjars/**
+      - /v3/api-docs/**
+      - /doc.html/**
+      - /admin/system/sysRole/**
+      - /admin/system/sysUser/**
+      - /admin/product/category/**
+      - /admin/product/brand/**
+  minio:
+    endpointUrl:  http://192.168.31.6:9000
+    accessKey:  minioadmin
+    secreKey: minioadmin
+    bucketName: bczx-bucket
