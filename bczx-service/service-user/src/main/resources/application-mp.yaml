@@ -1,0 +1,9 @@
+mybatis-plus:
+  # 默认mapper.xml文件 指定的位置mapper文件夹
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #控制台输出sql语句
+  type-aliases-package: top.woaibocai.bczx.model #设置别名
+  global-config:
+    db-config:
+      id-type: auto # 主键增长
+      logic-delete-field: isDeleted # 全局逻辑删除

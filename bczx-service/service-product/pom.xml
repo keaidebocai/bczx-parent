@@ -18,11 +18,6 @@
     </properties>
 
     <dependencies>
-        <!-- redis的起步依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
         <!--    springcache缓存    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -36,6 +36,7 @@
         <cloud.version>2022.0.2</cloud.version>
         <alibaba.version>2022.0.0.0-RC2</alibaba.version>
         <alipay.version>4.8.73.ALL</alipay.version>
+        <tencentcloudSdk>3.1.897</tencentcloudSdk>
     </properties>
 
     <!-- 管理依赖，版本锁定 -->
@@ -95,6 +96,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-3-starter</artifactId>
                 <version>${druid.version}</version>
+            </dependency>
+            <!--     腾讯云短信服务       -->
+            <dependency>
+                <groupId>com.tencentcloudapi</groupId>
+                <artifactId>tencentcloud-sdk-java</artifactId>
+                <version>${tencentcloudSdk}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
