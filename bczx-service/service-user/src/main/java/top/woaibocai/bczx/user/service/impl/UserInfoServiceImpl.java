@@ -80,7 +80,7 @@ public class UserInfoServiceImpl implements UserInfoService {
             throw new BoCaiException(ResultCodeEnum.LOGIN_ERROR);
         }
         //3.比较密码是否一致
-        if (!password.equals(DigestUtils.md5DigestAsHex(userInfo.getPassword().getBytes()))){
+        if (!DigestUtils.md5DigestAsHex(password.getBytes()).equals(userInfo.getPassword())){
             throw new BoCaiException(ResultCodeEnum.LOGIN_ERROR);
         }
         //4.校验用户是否禁用
