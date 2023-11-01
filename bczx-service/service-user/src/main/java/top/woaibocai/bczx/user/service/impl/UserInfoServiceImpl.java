@@ -16,6 +16,7 @@ import top.woaibocai.bczx.model.vo.h5.UserInfoVo;
 import top.woaibocai.bczx.user.mapper.UserInfoMapper;
 import top.woaibocai.bczx.user.service.UserInfoService;
 import top.woaibocai.bczx.user.utils.BeanCopyUtils;
+import top.woaibocai.bczx.utils.AuthContextUtil;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -97,11 +98,15 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserInfoVo getCurrentUserInfo(String token) {
         //从redis根据token获取信息
-        String userJson = redisTemplate.opsForValue().get("user:bczx:" + token);
-        if (!StringUtils.hasText(userJson)){
-            throw new BoCaiException(ResultCodeEnum.LOGIN_AUTH);
-        }
-        UserInfo userInfo = JSON.parseObject(userJson, UserInfo.class);
+//        String userJson = redisTemplate.opsForValue().get("user:bczx:" + token);
+//        if (!StringUtils.hasText(userJson)){
+//            throw new BoCaiException(ResultCodeEnum.LOGIN_AUTH);
+//        }
+//        UserInfo userInfo = JSON.parseObject(userJson, UserInfo.class);
+
+        //从ThreadLocal获取信息
+        UserInfo userInfo = AuthContextUtil.getUserInfo();
+
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(userInfo, UserInfoVo.class);
         return userInfoVo;
     }
