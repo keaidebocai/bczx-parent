@@ -4,9 +4,6 @@ spring:
   application:
     name: bczx-server-gateway
   cloud:
-    nacos:
-      discovery:
-        server-addr: 192.168.31.9:8848
     gateway:
       discovery:
         locator:
@@ -26,3 +23,7 @@ spring:
           uri: lb://service-product
           predicates:
             - Path=/*/product/**
+        - id: service-user
+          uri: lb://service-user
+          predicates:
+            - Path=/*/user/**
