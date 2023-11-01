@@ -90,4 +90,10 @@ public class ProductServiceImpl implements ProductService {
         productItemVo.setSpecValueList(JSON.parseArray(product.getSpecValue()));
         return productItemVo;
     }
+
+    @Override
+    public ProductSku getBySkuId(Long skuId) {
+        ProductSku productSku = productSkuMapper.selectById(skuId);
+        return productSku;
+    }
 }
