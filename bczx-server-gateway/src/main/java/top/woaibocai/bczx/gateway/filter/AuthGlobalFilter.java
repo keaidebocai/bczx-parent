@@ -32,7 +32,7 @@ import java.util.List;
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
     @Resource
     private RedisTemplate<String,String> redisTemplate;
-    @Resource
+
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
