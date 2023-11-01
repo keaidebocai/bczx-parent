@@ -6,12 +6,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
+import top.woaibocai.bczx.common.exception.BoCaiException;
 import top.woaibocai.bczx.model.entity.user.UserInfo;
+import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 import top.woaibocai.bczx.utils.AuthContextUtil;
 
 /**
  * @program: bczx-parent
- * @description:
+ * @description: 这个拦截器的主要做用验证api/** 接口token的合法性，并添加到TreadLocal线程中
  * @author: woaibocai
  * @create: 2023-11-01 11:19
  **/

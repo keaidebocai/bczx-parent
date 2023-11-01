@@ -63,6 +63,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
         return response.writeWith(Mono.just(buffer));
     }
+    //这是相当于service-user里的getUserInfo接口，只不过是全局检查，/**/api/**/auth/**这些接口都需要登陆后才能看见
     private UserInfo getUserInfo(ServerHttpRequest request) {
         String token = "";
         List<String> tokenList = request.getHeaders().get("token");
