@@ -1,0 +1,6 @@
+server:
+  port: 8514
+
+spring:
+  application:
+    name: service-order
