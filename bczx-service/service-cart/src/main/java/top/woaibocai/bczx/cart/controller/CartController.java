@@ -62,5 +62,11 @@ public class CartController {
         cartService.addToCart(skuId,skuNum);
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
+    @Operation(summary = "用于远程调用，获取购物车中选中的商品")
+    @GetMapping("/auth/getAllCkecked")
+    public List<CartInfo> getAllCkecked(){
+        List<CartInfo> list = cartService.getAllCkecked();
+        return list;
+    }
 
 }
