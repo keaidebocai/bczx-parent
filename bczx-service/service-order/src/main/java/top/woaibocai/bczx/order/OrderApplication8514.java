@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import top.woaibocai.bczx.common.anno.EnableUserTokenFeignInterceptor;
+import top.woaibocai.bczx.common.anno.EnableUserWebMvcConfiguration;
 
 /**
  * @program: bczx-parent
@@ -15,6 +16,7 @@ import top.woaibocai.bczx.common.anno.EnableUserTokenFeignInterceptor;
 @EnableFeignClients(basePackages = {"top.woaibocai.bczx.feign"})
 //把token在远程调用的过程中携带上
 @EnableUserTokenFeignInterceptor
+@EnableUserWebMvcConfiguration
 public class OrderApplication8514 {
     public static void main(String[] args) {
         SpringApplication.run(OrderApplication8514.class,args);

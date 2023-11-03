@@ -68,5 +68,11 @@ public class CartController {
         List<CartInfo> list = cartService.getAllCkecked();
         return list;
     }
+    @Operation(summary = "删除生成订单购物车的商品")
+    @GetMapping("auth/deleteChecked")
+    public Result deleteChecked(){
+        cartService.deleteChecked();
+        return Result.build(null,ResultCodeEnum.SUCCESS);
+    }
 
 }

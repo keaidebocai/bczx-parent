@@ -3,9 +3,8 @@ package top.woaibocai.bczx.order.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import top.woaibocai.bczx.model.dto.h5.OrderInfoDto;
 import top.woaibocai.bczx.model.vo.common.Result;
 import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 import top.woaibocai.bczx.model.vo.h5.TradeVo;
@@ -23,6 +22,12 @@ import top.woaibocai.bczx.order.service.OrderInfoService;
 public class OrderInfoController {
     @Resource
     private OrderInfoService orderInfoService;
+    @Operation(summary = "提交订单")
+    @PostMapping("auth/submitOrder")
+    public Result submitOrder(@RequestBody OrderInfoDto orderInfoDto){
+        Long orderId = orderInfoService.submitOrder(orderInfoDto);
+        return Result.build(orderId,ResultCodeEnum.SUCCESS);
+    }
     @Operation(summary = "确认下单")
     @GetMapping("auth/trade")
     public Result trade(){
