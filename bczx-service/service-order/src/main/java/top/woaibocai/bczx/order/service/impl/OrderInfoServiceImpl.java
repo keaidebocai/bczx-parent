@@ -1,5 +1,7 @@
 package top.woaibocai.bczx.order.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -169,5 +171,21 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         tradeVo.setTotalAmount(productSku.getSalePrice());
         tradeVo.setOrderItemList(orderItemList);
         return tradeVo;
+    }
+
+    @Override
+    public PageInfo<OrderInfo> findOrderPage(Integer page, Integer limit, Integer orderStatus) {
+        PageHelper.startPage(page,limit);
+        Long userId = AuthContextUtil.getUserInfo().getId();
+        List<OrderInfo> orderInfoList = orderInfoMapper.findOrderPage(userId,orderStatus);
+
+        //查询订单里的所所有订单项
+        orderInfoList.forEach(orderInfo -> {
+            //订单id查询订单里的订单项
+            List<OrderItem> orderItemList = orderInfoMapper.findOrderId(orderInfo.getId());
+            //封装
+            orderInfo.setOrderItemList(orderItemList);
+        });
+        return new PageInfo<>(orderInfoList);
     }
 }

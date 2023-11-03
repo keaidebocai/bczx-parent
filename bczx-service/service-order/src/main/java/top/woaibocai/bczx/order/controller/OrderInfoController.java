@@ -1,5 +1,6 @@
 package top.woaibocai.bczx.order.controller;
 
+import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -46,5 +47,13 @@ public class OrderInfoController {
     public Result buy(@PathVariable Long skuId){
         TradeVo tradeVo = orderInfoService.buy(skuId);
         return Result.build(tradeVo,ResultCodeEnum.SUCCESS);
+    }
+    @Operation(summary = "获取订单分页列表")
+    @GetMapping("auth/{page}/{limit}")
+    public Result<PageInfo<OrderInfo>> list(@PathVariable Integer page,
+                                            @PathVariable Integer limit,
+                                            @RequestParam(required = false, defaultValue = "") Integer orderStatus ){
+        PageInfo<OrderInfo> pageInfo = orderInfoService.findOrderPage(page,limit,orderStatus);
+        return Result.build(pageInfo,ResultCodeEnum.SUCCESS);
     }
 }
