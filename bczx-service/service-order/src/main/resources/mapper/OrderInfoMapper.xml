@@ -30,4 +30,11 @@
         and is_deleted = 0
         order by id desc
     </select>
+    <select id="getOrderInfoByOrderNo" resultType="top.woaibocai.bczx.model.entity.order.OrderInfo">
+        select
+            *
+        from
+            order_info
+        where order_no=#{orderNo}
+    </select>
 </mapper>

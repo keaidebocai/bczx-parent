@@ -14,4 +14,6 @@ public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
     List<OrderInfo> findOrderPage(Long userId, Integer orderStatus);
 
     List<OrderItem> findOrderId(Long id);
+
+    OrderInfo getOrderInfoByOrderNo(String orderNo);
 }
