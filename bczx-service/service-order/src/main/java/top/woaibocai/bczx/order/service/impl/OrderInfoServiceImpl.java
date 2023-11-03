@@ -152,4 +152,22 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     public OrderInfo getOrderInfo(Long orderId) {
         return orderInfoMapper.selectOrederById(orderId);
     }
+
+    @Override
+    public TradeVo buy(Long skuId) {
+        //封装集合
+        List<OrderItem> orderItemList = new ArrayList<>();
+        ProductSku productSku = productFeignClient.getBySkuId(skuId);
+        OrderItem orderItem = new OrderItem();
+        orderItem.setSkuId(skuId);
+        orderItem.setSkuName(productSku.getSkuName());
+        orderItem.setSkuNum(1);
+        orderItem.setSkuPrice(productSku.getSalePrice());
+        orderItem.setThumbImg(productSku.getThumbImg());
+        orderItemList.add(orderItem);
+        TradeVo tradeVo = new TradeVo();
+        tradeVo.setTotalAmount(productSku.getSalePrice());
+        tradeVo.setOrderItemList(orderItemList);
+        return tradeVo;
+    }
 }

@@ -10,4 +10,6 @@ public interface OrderInfoService {
     Long submitOrder(OrderInfoDto orderInfoDto);
 
     OrderInfo getOrderInfo(Long orderId);
+
+    TradeVo buy(Long skuId);
 }
