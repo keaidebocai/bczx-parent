@@ -6,4 +6,5 @@ import top.woaibocai.bczx.model.entity.order.OrderInfo;
 
 @Mapper
 public interface OrderInfoMapper extends BaseMapper<OrderInfo> {
+    OrderInfo selectOrederById(Long orderId);
 }

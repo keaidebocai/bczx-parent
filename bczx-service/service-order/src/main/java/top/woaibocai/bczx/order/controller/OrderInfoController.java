@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 import top.woaibocai.bczx.model.dto.h5.OrderInfoDto;
+import top.woaibocai.bczx.model.entity.order.OrderInfo;
 import top.woaibocai.bczx.model.vo.common.Result;
 import top.woaibocai.bczx.model.vo.common.ResultCodeEnum;
 import top.woaibocai.bczx.model.vo.h5.TradeVo;
@@ -33,5 +34,11 @@ public class OrderInfoController {
     public Result trade(){
         TradeVo tradeVo = orderInfoService.getTrade();
         return Result.build(tradeVo, ResultCodeEnum.SUCCESS);
+    }
+    @Operation(summary = "获取订单信息")
+    @GetMapping("auth/{orderId}")
+    public Result getOrderinfo(@PathVariable Long orderId){
+        OrderInfo orderInfo = orderInfoService.getOrderInfo(orderId);
+        return Result.build(orderInfo,ResultCodeEnum.SUCCESS);
     }
 }

@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="top.woaibocai.bczx.order.mapper.OrderInfoMapper">
 
+    <select id="selectOrederById" resultType="top.woaibocai.bczx.model.entity.order.OrderInfo">
+        select *
+        from
+            order_info
+        where id=#{orderId}
+    </select>
 </mapper>
